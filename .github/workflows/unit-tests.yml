@@ -43,6 +43,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ matrix.python }}-pip-
 
+      - name: Setup upterm session
+        uses: lhotari/action-upterm@v1
+
       - name: Pip list
         run: |
           source ~/.venv/bin/activate
