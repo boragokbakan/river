@@ -11,8 +11,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python: [3.8, 3.9, "3.10"]
-        os: [ubuntu-latest, macos-latest]
+        python: ["3.10"]
+        os: [ubuntu-latest]
 
     steps:
       - uses: actions/checkout@v2
@@ -45,17 +45,19 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install wheel
-          pip install -e ".[dev]"
           pip install scikit-learn sqlalchemy
 
-      - name: Cache datasets
-        uses: actions/cache@v2
-        with:
-          path: ~/river_data
-          key: ${{ runner.os }}
+      - name: Install River
+        run: pip install -e ".[dev]"
 
-      - name: Download datasets
-        run: python -c "from river import datasets; datasets.CreditCard().download(); datasets.Elec2().download()"
-
-      - name: pytest
-        run: pytest -m "not datasets"
+#      - name: Cache datasets
+#        uses: actions/cache@v2
+#        with:
+#          path: ~/river_data
+#          key: ${{ runner.os }}
+#
+#      - name: Download datasets
+#        run: python -c "from river import datasets; datasets.CreditCard().download(); datasets.Elec2().download()"
+#
+#      - name: pytest
+#        run: pytest -m "not datasets"
