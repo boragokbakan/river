@@ -47,10 +47,13 @@ jobs:
           python -m pip install --upgrade pip
           python -m venv ~/.venv
           source ~/.venv/bin/activate
-          pip list
           echo PATH=$PATH >> $GITHUB_ENV
           pip install scikit-learn sqlalchemy
-         
+
+      - name: Pip list
+        run: |
+          source ~/.venv/bin/activate
+          python -m pip list
 
       - name: Install River in editable mode
         run: |
