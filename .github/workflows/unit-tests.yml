@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - feature/faster_unittests
 
 jobs:
   test:
@@ -33,10 +34,10 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
 
-      - name: Cache Python dependencies
+      - name: Cache Python venv
         uses: actions/cache@v2
         with:
-          path: ~/.cache/pip
+          path: ~/.venv
           key: ${{ runner.os }}-${{ matrix.python }}-pip-${{ hashFiles('**/setup.py') }}
           restore-keys: |
             ${{ runner.os }}-${{ matrix.python }}-pip-
