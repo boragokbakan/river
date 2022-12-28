@@ -12,8 +12,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python: [ "3.10" ] #[3.8, 3.9, "3.10"]
-        os: [ ubuntu-latest ] #, macos-latest]
+        python: [3.8, 3.9, "3.10"]
+        os: [ ubuntu-latest, macos-latest]
 
 
     steps:
@@ -53,5 +53,5 @@ jobs:
       - name: Download datasets
         run: python -c "from river import datasets; datasets.CreditCard().download(); datasets.Elec2().download()"
 
-#      - name: pytest
-#        run: pytest -m "not datasets"
+      - name: pytest
+        run: pytest -m "not datasets"
