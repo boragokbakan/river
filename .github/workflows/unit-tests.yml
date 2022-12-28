@@ -47,6 +47,7 @@ jobs:
           python -m pip install --upgrade pip
           python -m venv ~/.venv
           source ~/.venv/bin/activate
+          pip list
           echo PATH=$PATH >> $GITHUB_ENV
           pip install scikit-learn sqlalchemy
          
