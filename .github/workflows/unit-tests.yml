@@ -70,4 +70,4 @@ jobs:
       - name: pytest
         run: | 
           source ~/.venv/bin/activate
-          pytest -m "not datasets"
+        # pytest -m "not datasets"
