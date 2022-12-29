@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python: [3.8, 3.9, "3.10"]
+        python: ["3.10"]
         os: [ubuntu-latest, macos-latest]
 
     steps:
@@ -58,4 +58,10 @@ jobs:
         run: python -c "from river import datasets; datasets.CreditCard().download(); datasets.Elec2().download()"
 
       - name: pytest
-        run: pytest -m "not datasets"
+        run: |
+          pip install pytest-reportlog pytest-duration-insights
+          pytest -m "not datasets" --report-log reportlog.jsonl
+
+      - name: Setup upterm session
+        uses: lhotari/action-upterm@v1
+
