@@ -32,7 +32,7 @@ jobs:
       - name: Set up Python ${{ matrix.python }}
         uses: actions/setup-python@v2
         with:
-          python-version: pypy${{ matrix.python }}
+          python-version: pypy3.7#${{ matrix.python }}
 
       - name: Cache Python dependencies
         uses: actions/cache@v2
