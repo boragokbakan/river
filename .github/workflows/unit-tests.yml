@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - feature/pypy
 
 jobs:
   test:
@@ -11,8 +12,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python: [3.8, 3.9, "3.10"]
-        os: [ubuntu-latest, macos-latest]
+        python: "3.10" #[3.8, 3.9, "3.10"]
+        os: [ubuntu-latest] #, macos-latest]
 
     steps:
       - uses: actions/checkout@v2
@@ -31,7 +32,7 @@ jobs:
       - name: Set up Python ${{ matrix.python }}
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ matrix.python }}
+          python-version: pypy${{ matrix.python }}
 
       - name: Cache Python dependencies
         uses: actions/cache@v2
@@ -43,10 +44,10 @@ jobs:
 
       - name: Install Python dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install wheel
-          pip install -e ".[dev]"
-          pip install scikit-learn sqlalchemy
+          pypy -m pip install --upgrade pip
+          pypy -m pip install wheel
+          pypy -m pip install -e ".[dev]"
+          pypy -m pip install scikit-learn sqlalchemy
 
       - name: Cache datasets
         uses: actions/cache@v2
@@ -55,7 +56,7 @@ jobs:
           key: ${{ runner.os }}
 
       - name: Download datasets
-        run: python -c "from river import datasets; datasets.CreditCard().download(); datasets.Elec2().download()"
+        run: pypy -m python -c "from river import datasets; datasets.CreditCard().download(); datasets.Elec2().download()"
 
       - name: pytest
-        run: pytest -m "not datasets"
+        run: pypy -m pytest -m "not datasets"
