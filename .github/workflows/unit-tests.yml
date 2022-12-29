@@ -49,7 +49,7 @@ jobs:
           pip install scikit-learn sqlalchemy
 
       - name: Install River
-        run: pip install -e ".[dev]"
+        run: pip install ".[dev]"
 
 #      - name: Cache datasets
 #        uses: actions/cache@v2
