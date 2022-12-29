@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - feature/durations
 
 jobs:
   test:
@@ -58,4 +59,13 @@ jobs:
         run: python -c "from river import datasets; datasets.CreditCard().download(); datasets.Elec2().download()"
 
       - name: pytest
-        run: pytest -m "not datasets"
+        run: |
+          pip install pytest-reportlog pytest-duration-insights
+          pytest -m "not datasets" --report-log reportlog.jsonl
+
+      - name: Upload reports
+        run: >
+          curl https://api.upload.io/v2/accounts/W142hZg/uploads/binary?originalFileName=${{runner.os}}-${{matrix.python}}.jsonl
+          -H "Authorization: Bearer public_W142hZgBZxMvpx3kpfasAu3P37zD" 
+          -H "Content-Type: text/plain"
+          --data-binary @reportlog.jsonl
