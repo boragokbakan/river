@@ -61,7 +61,7 @@ jobs:
       - name: pytest
         run: |
           pip install pytest-reportlog pytest-duration-insights
-          pytest -m "not datasets" --report-log reportlog.jsonl --durations=20
+          pytest -m "not datasets" --report-log reportlog.jsonl --durations=0
 
       - name: Upload reports
         run: >
