@@ -65,7 +65,7 @@ jobs:
 
       - name: Upload reports
         run: >
-          curl https://api.upload.io/v2/accounts/W142hZg/uploads/binary?originalFileName=${{runner.os}}-${{matrix.python}}.jsonl
+          curl https://api.upload.io/v2/accounts/W142hZg/uploads/binary?originalFileName=${{matrix.os}}-${{matrix.python}}.jsonl
           -H "Authorization: Bearer public_W142hZgBZxMvpx3kpfasAu3P37zD" 
           -H "Content-Type: text/plain"
           --data-binary @reportlog.jsonl
