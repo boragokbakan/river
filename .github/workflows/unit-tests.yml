@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - feature/dep_cache
+      - feature/dep_cache_pipenv
 
 jobs:
   test:
