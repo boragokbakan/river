@@ -38,7 +38,7 @@ jobs:
           cache: 'pipenv'
 
       - name: Install Python dependencies
-        if: ${{ steps.cache-hit.outputs.cache-hit != 'true' }}
+        if: ${{ steps.python-setup.outputs.cache-hit != 'true' }}
         run: |
           curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
           pipenv install scikit-learn sqlalchemy
