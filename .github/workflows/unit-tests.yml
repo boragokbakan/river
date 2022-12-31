@@ -41,8 +41,9 @@ jobs:
         if: ${{ steps.python-setup.outputs.cache-hit != 'true' }}
         run: |
           curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
-          pipenv install scikit-learn sqlalchemy
-          pipenv install pytest-xdist[psutil]
+          pipenv shell
+          pip install scikit-learn sqlalchemy
+          pip install pytest-xdist[psutil]
 
       - name: Build River
         run: |
