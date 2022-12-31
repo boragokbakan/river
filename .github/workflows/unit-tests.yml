@@ -46,7 +46,8 @@ jobs:
 
       - name: Build River
         run: |
-          pipenv install -e ".[dev]"
+          pipenv shell
+          pip install -e ".[dev]"
 
       - name: Cache River datasets
         uses: actions/cache@v2
