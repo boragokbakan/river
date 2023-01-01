@@ -54,7 +54,11 @@ jobs:
           key: ${{ runner.os }}
 
       - name: Download datasets
-        run: python -c "from river import datasets; datasets.CreditCard().download(); datasets.Elec2().download()"
+        run: |
+          source ~/.venv/bin/activate
+          python -c "from river import datasets; datasets.CreditCard().download(); datasets.Elec2().download()"
 
       - name: pytest
-        run: pytest -m "not datasets" --durations=10 -n logical # Run pytest on all logical CPU cores
+        run: |
+          source ~/.venv/bin/activate
+          pytest -m "not datasets" --durations=10 -n logical # Run pytest on all logical CPU cores
