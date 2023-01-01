@@ -7,7 +7,20 @@ on:
       - feature/dependent_actions
 
 jobs:
+  call_river_build:
+    strategy:
+      fail-fast: false
+      matrix:
+        python: [ "3.10" ] #[3.8, 3.9, "3.10"]
+        os: [ ubuntu-latest, macos-latest ]
+
+    uses: ./.github/workflows/build-river.yml
+    with:
+      os: ${{ matrix.os }}
+      python: ${{ matrix.python }}
+
   test:
+    needs: call_river_build
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -18,51 +31,26 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: set up rust
-        if: matrix.os != 'ubuntu-latest'
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: nightly
-          override: true
-
-      - run: curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain=nightly --profile=minimal -y && rustup show
-        if: matrix.os == 'ubuntu-latest'
-
       - name: Set up Python ${{ matrix.python }}
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python }}
 
-      - name: Cache Python dependencies
+      - name: Retrieve Python Dependencies
         uses: actions/cache@v2
+        id: cache-venv
         with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-${{ matrix.python }}-pip-${{ hashFiles('**/setup.py') }}
+          path: ~/.venv
+          key: ${{ runner.os }}-${{ matrix.python }}-venv-${{ hashFiles('**/setup.py') }}
           restore-keys: |
-            ${{ runner.os }}-${{ matrix.python }}-pip-
+            ${{ runner.os }}-${{ matrix.python }}-venv-
 
-      - name: Install Python dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install wheel
-          pip install -e ".[dev]"
-          pip install scikit-learn sqlalchemy
-          pip install pytest-xdist[psutil]
-          
-      - name: Setup upterm session
-        uses: lhotari/action-upterm@v1
-
-      - name: Cache River datasets
+      - name: Cache datasets
         uses: actions/cache@v2
         with:
-          path: ~/river_data
-          key: ${{ runner.os }}
-
-      - name: Cache scikit-learn datasets
-        uses: actions/cache@v2
-        with:
-          path: ~/scikit_learn_data
+          path: |
+            ~/scikit_learn_data
+            ~/river_data
           key: ${{ runner.os }}
 
       - name: Download datasets
