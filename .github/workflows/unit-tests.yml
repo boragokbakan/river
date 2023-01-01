@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - feature/dependent_actions
 
 jobs:
   test:
@@ -11,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python: [3.8, 3.9, "3.10"]
+        python: ["3.10"] #[3.8, 3.9, "3.10"]
         os: [ubuntu-latest, macos-latest]
 
     steps:
@@ -48,6 +49,9 @@ jobs:
           pip install -e ".[dev]"
           pip install scikit-learn sqlalchemy
           pip install pytest-xdist[psutil]
+          
+      - name: Setup upterm session
+        uses: lhotari/action-upterm@v1
 
       - name: Cache River datasets
         uses: actions/cache@v2
