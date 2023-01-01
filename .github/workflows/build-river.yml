@@ -38,9 +38,9 @@ jobs:
         id: cache-venv
         with:
           path: ~/.venv
-          key: ${{ runner.os }}-${{ matrix.python }}-venv-${{ hashFiles('**/setup.py') }}
+          key: ${{ inputs.os }}-${{ matrix.python }}-venv-${{ hashFiles('**/setup.py') }}
           restore-keys: |
-            ${{ runner.os }}-${{ matrix.python }}-venv-
+            ${{ inputs.os }}-${{ matrix.python }}-venv-
 
       - name: Install Python dependencies
         if: ${{ steps.cache-venv.outputs.cache-hit != 'true' }}

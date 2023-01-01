@@ -41,9 +41,9 @@ jobs:
         id: cache-venv
         with:
           path: ~/.venv
-          key: ${{ runner.os }}-${{ matrix.python }}-venv-${{ hashFiles('**/setup.py') }}
+          key: ${{ matrix.os }}-${{ matrix.python }}-venv-${{ hashFiles('**/setup.py') }}
           restore-keys: |
-            ${{ runner.os }}-${{ matrix.python }}-venv-
+            ${{ matrix.os }}-${{ matrix.python }}-venv-
 
       - name: Cache datasets
         uses: actions/cache@v2
@@ -51,7 +51,7 @@ jobs:
           path: |
             ~/scikit_learn_data
             ~/river_data
-          key: ${{ runner.os }}
+          key: ${{ matrix.os }}-datasets
 
       - name: Download datasets
         run: |
