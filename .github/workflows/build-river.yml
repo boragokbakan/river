@@ -59,7 +59,7 @@ jobs:
       - name: Archive River artifact
         uses: actions/upload-artifact@v3
         with:
-          name: river-build-${{ github.run_id }} # Artifacts should only be used within runs!
+          name: river-build-${{ github.run_id }}-${{ inputs.os }}-${{ inputs.python }} # Artifacts should only be used within runs!
           path: ${{ github.workspace }} # The entire workspace is saved (It should only contain river anyway...)
           retention-days: 1
           if-no-files-found: error

@@ -41,7 +41,7 @@ jobs:
       - name: Download River artifact
         uses: actions/download-artifact@v3
         with:
-          name: river-build-${{ github.run_id }} # Artifacts should only be used within runs!
+          name: river-build-${{ github.run_id }}-${{ matrix.os }}-${{ matrix.python }} # Artifacts should only be used within runs!
           path: ${{ github.workspace }} # The entire workspace is saved (It should only contain river anyway...)
 
       - name: Cache River datasets
