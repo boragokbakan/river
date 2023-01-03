@@ -1,13 +1,6 @@
 name: build-river
 on:
   workflow_call:
-      inputs:
-        os:
-          required: true
-          type: string
-        python:
-          required: true
-          type: string
 
 jobs:
   build_river:
