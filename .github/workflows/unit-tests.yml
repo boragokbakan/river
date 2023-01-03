@@ -7,7 +7,7 @@ on:
       - feature/dependent_actions
 
 jobs:
-  call_river_build:
+  call_build_river:
     strategy:
       fail-fast: false
       matrix:
