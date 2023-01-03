@@ -35,9 +35,9 @@ jobs:
         id: cache-venv
         with:
           path: ~/.venv
-          key: ${{ runner.os }}-${{ inputs.python }}-venv-${{ hashFiles('**/setup.py') }}
+          key: ${{ inputs.os }}-${{ inputs.python }}-venv-${{ hashFiles('**/setup.py') }}
           restore-keys: |
-            ${{ runner.os }}-${{ inputs.python }}-venv-
+            ${{ inputs.os }}-${{ inputs.python }}-venv-
 
       - name: Install Python dependencies
         if: ${{ steps.cache-venv.outputs.cache-hit != 'true' }}
@@ -57,6 +57,7 @@ jobs:
       - name: Archive River artifact
         uses: actions/upload-artifact@v3
         with:
-          name: river-build-${{ inputs.os }}-${{ inputs.python }}
-          path: |
-            ~/
+          name: river-build-${{ github.run_id }} # Artifacts should only be used within runs!
+          path: ${{ github.workspace }} # The entire workspace is saved (It should only contain river anyway...)
+          retention-days: 1
+          if-no-files-found: error
