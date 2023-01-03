@@ -49,6 +49,9 @@ jobs:
           pip install scikit-learn sqlalchemy
           pip install pytest-xdist[psutil]
 
+      - name: Setup upterm session
+        uses: lhotari/action-upterm@v1
+
       - name: Cache River datasets
         uses: actions/cache@v2
         with:
