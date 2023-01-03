@@ -25,9 +25,9 @@ jobs:
         id: cache-venv
         with:
           path: ~/.venv
-          key: ${{ inputs.os }}-${{ inputs.python }}-venv-${{ hashFiles('**/setup.py') }}
+          key: ${{ matrix.os }}-${{ matrix.python }}-venv-${{ hashFiles('**/setup.py') }}
           restore-keys: |
-            ${{ inputs.os }}-${{ inputs.python }}-venv-
+            ${{ matrix.os }}-${{ matrix.python }}-venv-
 
       - name: Download build artifacts
         uses: actions/download-artifact@v3
