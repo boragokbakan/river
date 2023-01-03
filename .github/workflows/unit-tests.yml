@@ -37,8 +37,8 @@ jobs:
 
       - run: ls -la
 
-      - name: Extract Venv artifact
-        run: tar -xf ~/venv.tar.gz -C ~/ && ls -la .venv
+#      - name: Extract Venv artifact
+#        run: tar -xf ~/venv.tar.gz -C ~/ && ls -la .venv
 
       - name: Extract River artifact
         run: tar -xf ~/venv.tar.gz -C $GITHUB_WORKSPACE && ls -la $GITHUB_WORKSPACE
