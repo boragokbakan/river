@@ -29,11 +29,19 @@ jobs:
           restore-keys: |
             ${{ inputs.os }}-${{ inputs.python }}-venv-
 
-      - name: Download River artifact
+      - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
           name: river-build-${{ github.run_id }}-${{ matrix.os }}-${{ matrix.python }} # Artifacts should only be used within runs!
-          path: ${{ github.workspace }} # The entire workspace is saved (It should only contain river anyway...)
+          path: ~/
+
+      - run: ls -la
+
+      - name: Extract Venv artifact
+        run: tar -xf ~/venv.tar.gz -C ~/ && ls -la .venv
+
+      - name: Extract River artifact
+        run: tar -xf ~/venv.tar.gz -C $GITHUB_WORKSPACE && ls -la $GITHUB_WORKSPACE
 
       - name: Cache River datasets
         uses: actions/cache@v2
@@ -48,7 +56,11 @@ jobs:
           key: ${{ runner.os }}
 
       - name: Download datasets
-        run: python -c "from river import datasets; datasets.CreditCard().download(); datasets.Elec2().download()"
+        run: |
+          source ~/.venv/bin/activate
+          python -c "from river import datasets; datasets.CreditCard().download(); datasets.Elec2().download()"
 
       - name: pytest
-        run: pytest -m "not datasets" --durations=10 -n logical # Run pytest on all logical CPU cores
+        run: |
+          source ~/.venv/bin/activate
+          pytest -m "not datasets" --durations=10 -n logical # Run pytest on all logical CPU cores
