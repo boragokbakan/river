@@ -11,13 +11,18 @@ on:
 
 jobs:
   build_river:
-    runs-on: ${{ inputs.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.10" ]
+        os: [ ubuntu-latest ]
 
     steps:
       - uses: actions/checkout@v2
 
       - name: set up rust
-        if: inputs.os != 'ubuntu-latest'
+        if: matrix.os != 'ubuntu-latest'
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
@@ -25,21 +30,21 @@ jobs:
           override: true
 
       - run: curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain=nightly --profile=minimal -y && rustup show
-        if: inputs.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-latest'
 
-      - name: Set up Python ${{ inputs.python }}
+      - name: Set up Python ${{ matrix.python }}
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ inputs.python }}
+          python-version: ${{ matrix.python }}
 
       - name: Cache the Python environment
         uses: actions/cache@v2
         id: cache-venv
         with:
           path: ~/.venv
-          key: ${{ inputs.os }}-${{ inputs.python }}-venv-${{ hashFiles('**/setup.py') }}
+          key: ${{ matrix.os }}-${{ matrix.python }}-venv-${{ hashFiles('**/setup.py') }}
           restore-keys: |
-            ${{ inputs.os }}-${{ inputs.python }}-venv-
+            ${{ matrix.os }}-${{ matrix.python }}-venv-
 
       - name: Install Python dependencies
         if: ${{ steps.cache-venv.outputs.cache-hit != 'true' }}
@@ -59,7 +64,7 @@ jobs:
       - name: Archive River artifact
         uses: actions/upload-artifact@v3
         with:
-          name: river-build-${{ github.run_id }}-${{ inputs.os }}-${{ inputs.python }} # Artifacts should only be used within runs!
+          name: river-build-${{ github.run_id }}-${{ matrix.os }}-${{ matrix.python }} # Artifacts should only be used within runs!
           path: ${{ github.workspace }} # The entire workspace is saved (It should only contain river anyway...)
           retention-days: 1
           if-no-files-found: error
