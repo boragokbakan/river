@@ -61,10 +61,24 @@ jobs:
           source ~/.venv/bin/activate
           pip install -e ".[dev]"
 
+      - name: Compress the Virtual Environment
+        run: tar -czf ~/venv.tar.gz ~/.venv
+
+      - name: Compress the Workspace
+        run: tar -czf ~/river.tar.gz $GITHUB_WORKSPACE # The entire workspace is saved (It should only contain river anyway...)
+
+      - name: Archive Venv artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: venv-${{ github.run_id }}-${{ matrix.os }}-${{ matrix.python }} # Artifacts should only be used within runs!
+          path: ~/venv.tar.gz
+          retention-days: 1
+          if-no-files-found: error
+
       - name: Archive River artifact
         uses: actions/upload-artifact@v3
         with:
           name: river-build-${{ github.run_id }}-${{ matrix.os }}-${{ matrix.python }} # Artifacts should only be used within runs!
-          path: ${{ github.workspace }} # The entire workspace is saved (It should only contain river anyway...)
+          path: ~/river.tar.gz
           retention-days: 1
           if-no-files-found: error
