@@ -29,6 +29,15 @@ jobs:
           restore-keys: |
             ${{ matrix.os }}-${{ matrix.python }}-venv-
 
+#      - name: Retrieve the Python environment
+#        uses: actions/cache/save@v3
+#        id: cache-venv
+#        with:
+#          path: |
+#            ~/.venv
+#            ${{ github.workspace }}
+#          key: ${{ matrix.os }}-${{ matrix.python }}-venv-${{ github.run_id }}
+
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -41,10 +50,7 @@ jobs:
 #        run: tar -xf ~/venv.tar.gz -C ~/ && ls -la ~/.venv
 
       - name: Extract River artifact
-        run: tar -xf ~/river.tar.gz -C ~/ && ls -la ~/
-
-      - name: Setup upterm session
-        uses: lhotari/action-upterm@v1
+        run: tar -xf ~/river.tar.gz -C / && ls -la $GITHUB_WORKSPACE
 
       - name: Cache River datasets
         uses: actions/cache@v2
