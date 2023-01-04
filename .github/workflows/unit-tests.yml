@@ -41,7 +41,7 @@ jobs:
 #        run: tar -xf ~/venv.tar.gz -C ~/ && ls -la ~/.venv
 
       - name: Extract River artifact
-        run: tar -xf ~/river.tar.gz -C ~/ && ls -la $GITHUB_WORKSPACE
+        run: tar -xf ~/river.tar.gz -C ~/ && ls -la ~/
 
       - name: Setup upterm session
         uses: lhotari/action-upterm@v1
