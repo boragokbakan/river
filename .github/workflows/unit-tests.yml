@@ -42,7 +42,7 @@ jobs:
 
       - name: Extract River artifact
         run: tar -xf ~/river.tar.gz -C ~/ && ls -la $GITHUB_WORKSPACE
-upt
+
       - name: Setup upterm session
         uses: lhotari/action-upterm@v1
 
