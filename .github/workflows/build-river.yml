@@ -50,11 +50,14 @@ jobs:
           pip install wheel
           pip install scikit-learn sqlalchemy
           pip install pytest-xdist[psutil]
+          pip install numpydoc jupyter
+          pip install git+https://github.com/MaxHalford/yamp
+
           
       - name: Build River
         run: |
           source ~/.venv/bin/activate
-          pip install -e ".[dev]"
+          pip install -e ".[dev,docs]"
 
       - uses: actions/cache/save@v3
         id: cache-river
