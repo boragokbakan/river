@@ -13,7 +13,7 @@ jobs:
     runs-on: ${{ inputs.os }}
 
     # Instead of using two matrices in the calling Workflow, we can use conditionals here
-    if: (inputs.os == 'ubuntu-latest' && inputs.python == '3.9') # || github.event_name == 'push'
+    if: (inputs.os == 'ubuntu-latest' && inputs.python == '3.9') || github.event_name == 'push'
 
     steps:
       - uses: actions/checkout@v3
@@ -61,7 +61,7 @@ jobs:
           source ~/.venv/bin/activate
           pip install -e ".[dev,docs]"
 
-      # Saving the git project alongside the built package caused issues
+      # We should delete the git project from the build cache to avoid conflicts
       - name: Delete the Git project
         run: rm -r .git
 
