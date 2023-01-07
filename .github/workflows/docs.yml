@@ -17,8 +17,6 @@ jobs:
         with:
           python: 3.9
 
-      - run: ls -la ${{github.workspace}}
-
       - name: Install Ubuntu dependencies
         run: sudo apt-get install graphviz pandoc
 
@@ -27,9 +25,8 @@ jobs:
           source ~/.venv/bin/activate
           make doc
 
-      - run: git status
-
       - name: Deploy docs
+        if: github.event_name == 'push'
         env:
           GH_TOKEN: ${{ secrets.GitHubToken }}
         run: |
@@ -44,4 +41,4 @@ jobs:
           git checkout gh-pages
           git pull
           git checkout main
-          mike  deploy dev --push --remote https://github.com/boragokbakan/river.git
+          mike deploy dev --push --remote https://github.com/boragokbakan/river.git

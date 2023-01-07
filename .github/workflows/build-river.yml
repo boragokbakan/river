@@ -38,9 +38,7 @@ jobs:
         uses: actions/cache@v3
         id: cache-venv
         with:
-          path: |
-            ~/.venv
-            ~/.local/bin
+          path: ~/.venv
           key: ${{ runner.os }}-${{ inputs.python }}-venv-${{ hashFiles('**/setup.py') }}
           restore-keys: |
             ${{ github.run_id }}-venv-${{ runner.os }}-${{ inputs.python }}
@@ -72,5 +70,3 @@ jobs:
         with:
           path: ${{ github.workspace }}
           key: river-build-${{ github.run_id }}-${{ runner.os }}-${{ inputs.python }}
-
-      - run: ls -la ${{github.workspace}}
