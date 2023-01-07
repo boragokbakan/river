@@ -14,16 +14,10 @@ runs:
       uses: actions/cache/restore@v3
       id: retrieve-venv
       with:
-        path: |
-          ~/.venv
-          ~/.local/bin
+        path: ~/.venv
         key: ${{ github.run_id }}-venv-${{ runner.os }}-${{ inputs.python }}
         restore-keys: |
           ${{ runner.os }}-${{ inputs.python }}-venv
-
-#    - name: Delete the working dir
-#      shell: bash
-#      run: rm -r *
 
     - name: Retrieve River
       uses: actions/cache/restore@v3
@@ -32,6 +26,3 @@ runs:
         path: ${{ github.workspace }}
         key: river-build-3862937560-Linux-3.9 #river-build-${{ github.run_id }}-${{ runner.os }}-${{ inputs.python }}
 
-    - name: Adjust workspace ownership
-      shell: bash
-      run: chown -hR $USER ${{ github.workspace }}
