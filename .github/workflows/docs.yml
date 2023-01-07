@@ -27,8 +27,8 @@ jobs:
           source ~/.venv/bin/activate
           make doc
 
-      - name: Setup upterm session
-        uses: lhotari/action-upterm@v1
+#      - name: Setup upterm session
+#        uses: lhotari/action-upterm@v1
 
       - name: Deploy docs
         env:

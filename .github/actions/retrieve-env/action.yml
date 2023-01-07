@@ -21,6 +21,10 @@ runs:
         restore-keys: |
           ${{ runner.os }}-${{ inputs.python }}-venv
 
+    - name: Delete the working dir
+      shell: bash
+      run: rm -r *
+
     - name: Retrieve River
       uses: actions/cache/restore@v3
       id: retrieve-river
