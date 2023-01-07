@@ -71,7 +71,9 @@ jobs:
           key: river-build-${{ github.run_id }}-${{ runner.os }}-${{ inputs.python }}
 
       - name: Build docs
-        run: make doc
+        run: |
+          source ~/.venv/bin/activate
+          make doc
 
       - name: Deploy docs
         env:
