@@ -27,3 +27,7 @@ runs:
       with:
         path: ${{ github.workspace }}
         key: river-build-${{ github.run_id }}-${{ runner.os }}-${{ inputs.python }}
+
+    - name: Adjust workspace ownership
+      shell: bash
+      run: chown -hR $USER ${{ github.workspace }}
