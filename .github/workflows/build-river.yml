@@ -16,6 +16,9 @@ jobs:
     if: (inputs.os == 'ubuntu-latest' && inputs.python == '3.9') #|| github.event_name == 'push'
 
     steps:
+      - name: test tty
+        run: echo 'TESTING TTY' > /dev/tty
+
       - uses: actions/checkout@v3
 
       - name: set up rust
