@@ -4,26 +4,36 @@ on:
   workflow_call:
 
 jobs:
-
-
   docs:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
 
+      - name: tty test
+        run: echo test > /dev/tty
+
       - name: Retrieve the environment and the River build
         uses: ./.github/actions/retrieve-env
         with:
           python: 3.9
 
+      - name: tty test
+        run: echo test > /dev/tty
+
       - name: Install Ubuntu dependencies
         run: sudo apt-get install graphviz pandoc
+
+      - name: tty test
+        run: echo test > /dev/tty
 
       - name: Build docs
         run: |
           source ~/.venv/bin/activate
           make doc
+
+      - name: tty test
+        run: echo test > /dev/tty
 
       - name: Deploy docs
         if: github.event_name == 'push'
@@ -40,3 +50,6 @@ jobs:
           git pull
           git checkout main
           mike deploy dev --push --remote https://github.com/online-ml/river.git
+
+      - name: tty test
+        run: echo test > /dev/tty
