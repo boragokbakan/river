@@ -34,8 +34,8 @@ jobs:
           git config pull.rebase false
           git add --all
           git commit -m "Release dev docs" --allow-empty
-#          git fetch
-#          git checkout gh-pages
-#          git pull
-#          git checkout main
+          git fetch
+          git checkout gh-pages
+          git pull
+          git checkout main
 #          mike deploy dev --push --remote https://github.com/online-ml/river.git
