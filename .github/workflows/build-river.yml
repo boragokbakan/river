@@ -18,6 +18,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Install Ubuntu dependencies
+        run: sudo apt-get install graphviz pandoc
+
       - name: set up rust
         if: runner.os != 'Linux'
         uses: actions-rs/toolchain@v1
@@ -66,3 +69,21 @@ jobs:
         with:
           path: ~/work/river/river
           key: river-build-${{ github.run_id }}-${{ runner.os }}-${{ inputs.python }}
+
+      - name: Build docs
+        run: make doc
+
+      - name: Deploy docs
+        env:
+          GH_TOKEN: ${{ secrets.GitHubToken }}
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git config pull.rebase false
+          git add --all
+          git commit -m "Release dev docs" --allow-empty
+          git fetch
+          git checkout gh-pages
+          git pull
+          git checkout main
+          mike deploy dev --push --remote https://github.com/online-ml/river.git
