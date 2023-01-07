@@ -17,6 +17,8 @@ jobs:
         with:
           python: 3.9
 
+      - run: ls -la ${{github.workspace}}
+
       - name: Install Ubuntu dependencies
         run: sudo apt-get install graphviz pandoc
 
@@ -24,6 +26,9 @@ jobs:
         run: |
           source ~/.venv/bin/activate
           make doc
+
+      - name: Setup upterm session
+        uses: lhotari/action-upterm@v1
 
       - name: Deploy docs
         env:

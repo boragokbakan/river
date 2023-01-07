@@ -14,7 +14,9 @@ runs:
       uses: actions/cache/restore@v3
       id: retrieve-venv
       with:
-        path: ~/.venv
+        path: |
+          ~/.venv
+          ~/.local/bin
         key: ${{ github.run_id }}-venv-${{ runner.os }}-${{ inputs.python }}
         restore-keys: |
           ${{ runner.os }}-${{ inputs.python }}-venv

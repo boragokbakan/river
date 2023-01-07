@@ -38,7 +38,9 @@ jobs:
         uses: actions/cache@v3
         id: cache-venv
         with:
-          path: ~/.venv
+          path: |
+            ~/.venv
+            ~/.local/bin
           key: ${{ runner.os }}-${{ inputs.python }}-venv-${{ hashFiles('**/setup.py') }}
           restore-keys: |
             ${{ github.run_id }}-venv-${{ runner.os }}-${{ inputs.python }}
@@ -67,22 +69,4 @@ jobs:
           path: ${{ github.workspace }}
           key: river-build-${{ github.run_id }}-${{ runner.os }}-${{ inputs.python }}
 
-      - name: Build docs
-        run: |
-          source ~/.venv/bin/activate
-          make doc
-
-      - name: Deploy docs
-        env:
-          GH_TOKEN: ${{ secrets.GitHubToken }}
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git config pull.rebase false
-          git add --all
-          git commit -m "Release dev docs" --allow-empty
-          git fetch
-          git checkout gh-pages
-          git pull
-          git checkout main
-          mike deploy dev --push --remote https://github.com/online-ml/river.git
+      - run: ls -la ${{github.workspace}}
