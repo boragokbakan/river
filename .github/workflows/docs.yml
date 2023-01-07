@@ -34,6 +34,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GitHubToken }}
         run: |
+          rm -r .git
           git init
           git remote add origin ${{ github.repositoryUrl }}
           git config user.name github-actions
