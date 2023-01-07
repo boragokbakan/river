@@ -36,16 +36,16 @@ jobs:
       python: ${{ matrix.python }}
       os: ${{ matrix.os }}
 
-  docs:
+  dev-docs:
     if: github.event_name == 'push'
 #    needs: build-river # The workflow will actually update docs, so it's best to wait for unit tests too.
     uses: ./.github/workflows/dev-docs.yml
     secrets: inherit
 
-  dev-docs:
+  dep-docs:
     if: github.event_name == 'push'
     needs: build-river # The workflow will actually update docs, so it's best to wait for unit tests too.
-    uses: ./.github/workflows/docs.yml
+    uses: ./.github/workflows/dep-docs.yml
     secrets: inherit
 
   branch-docs:
