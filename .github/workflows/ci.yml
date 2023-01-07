@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - fix/dev-docs
 
   pull_request:
     branches:
@@ -37,7 +38,7 @@ jobs:
 
   dev-docs:
     if: github.event_name == 'push'
-    needs: unit-tests # The workflow will actually update docs, so it's best to wait for unit tests too.
+    needs: build-river # The workflow will actually update docs, so it's best to wait for unit tests too.
     uses: ./.github/workflows/docs.yml
     secrets: inherit
 
