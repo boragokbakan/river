@@ -31,6 +31,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GitHubToken }}
         run: |
+          git init
+          git remote add origin ${{ github.repositoryUrl }}
           git config user.name github-actions
           git config user.email github-actions@github.com
           git config pull.rebase false
