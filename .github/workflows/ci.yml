@@ -38,8 +38,8 @@ jobs:
 
   dev-docs:
     if: github.event_name == 'push'
-    needs: build-river # The workflow will actually update docs, so it's best to wait for unit tests too.
-    uses: ./.github/workflows/docs.yml
+#    needs: build-river # The workflow will actually update docs, so it's best to wait for unit tests too.
+    uses: ./.github/workflows/dev-docs.yml
     secrets: inherit
 
   branch-docs:

@@ -1,10 +1,7 @@
 name: dev-docs
 
 on:
-  push:
-    branches:
-      - main
-      - fix/dev-docs
+  workflow_call:
 
 jobs:
   ubuntu:
