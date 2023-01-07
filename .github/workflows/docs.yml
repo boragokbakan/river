@@ -30,13 +30,15 @@ jobs:
 #      - name: Setup upterm session
 #        uses: lhotari/action-upterm@v1
 
+      - run: git status
+
       - name: Deploy docs
         env:
           GH_TOKEN: ${{ secrets.GitHubToken }}
         run: |
-          rm -r .git
-          git init
-          git remote add origin ${{ github.repositoryUrl }}
+#          rm -r .git
+#          git init
+#          git remote add origin ${{ github.repositoryUrl }}
           git config user.name github-actions
           git config user.email github-actions@github.com
           git config pull.rebase false
