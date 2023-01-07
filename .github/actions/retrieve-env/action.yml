@@ -24,5 +24,4 @@ runs:
       id: retrieve-river
       with:
         path: ${{ github.workspace }}
-        key: river-build-3862937560-Linux-3.9 #river-build-${{ github.run_id }}-${{ runner.os }}-${{ inputs.python }}
-
+        key: river-build-${{ github.run_id }}-${{ runner.os }}-${{ inputs.python }}
