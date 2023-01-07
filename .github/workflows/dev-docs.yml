@@ -9,9 +9,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: test tty
-        run: echo 'TESTING TTY' > /dev/tty
-
       - name: Install Ubuntu dependencies
         run: sudo apt-get install graphviz pandoc
 
@@ -19,9 +16,6 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
-
-      - name: test tty
-        run: echo 'TESTING TTY' > /dev/tty
 
       - run: curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain=nightly --profile=minimal -y && rustup show
         if: matrix.os == 'ubuntu-latest'
@@ -34,9 +28,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
-      - name: test tty
-        run: echo 'TESTING TTY' > /dev/tty
-
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
@@ -44,14 +35,8 @@ jobs:
           pip install git+https://github.com/MaxHalford/yamp
           pip install -e ".[docs]"
 
-      - name: test tty
-        run: echo 'TESTING TTY' > /dev/tty
-
       - name: Build docs
         run: make doc
-
-      - name: test tty
-        run: echo 'TESTING TTY' > /dev/tty
 
       - name: Deploy docs
         env:
@@ -66,7 +51,4 @@ jobs:
           git checkout gh-pages
           git pull
           git checkout main
-          mike deploy dev --push --remote https://github.com/online-ml/river.git
-
-      - name: test tty
-        run: echo 'TESTING TTY' > /dev/tty
+#          mike deploy dev --push --remote https://github.com/online-ml/river.git
