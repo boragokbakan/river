@@ -26,7 +26,6 @@ jobs:
           make doc
 
       - name: Deploy docs
-        if: github.event_name == 'push'
         env:
           GH_TOKEN: ${{ secrets.GitHubToken }}
         run: |
