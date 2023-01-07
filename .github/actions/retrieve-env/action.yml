@@ -19,9 +19,9 @@ runs:
         restore-keys: |
           ${{ runner.os }}-${{ inputs.python }}-venv
 
-    - name: Retrieve River
-      uses: actions/cache/restore@v3
-      id: retrieve-river
-      with:
-        path: ${{ github.workspace }}
-        key: river-build-${{ github.run_id }}-${{ runner.os }}-${{ inputs.python }}
+#    - name: Retrieve River
+#      uses: actions/cache/restore@v3
+#      id: retrieve-river
+#      with:
+#        path: ${{ github.workspace }}
+#        key: river-build-${{ github.run_id }}-${{ runner.os }}-${{ inputs.python }}
