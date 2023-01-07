@@ -36,7 +36,6 @@ jobs:
           git config pull.rebase false
           git add --all
           git commit -m "Release dev docs" --allow-empty
-          cat .git/config
           git fetch
           git checkout gh-pages
           git pull
