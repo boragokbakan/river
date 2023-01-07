@@ -17,7 +17,7 @@ runs:
         path: |
           ~/.venv
           ~/.local/bin
-        key: river-build-3862937560-Linux-3.9 #${{ github.run_id }}-venv-${{ runner.os }}-${{ inputs.python }}
+        key: ${{ github.run_id }}-venv-${{ runner.os }}-${{ inputs.python }}
         restore-keys: |
           ${{ runner.os }}-${{ inputs.python }}-venv
 
@@ -30,7 +30,7 @@ runs:
       id: retrieve-river
       with:
         path: ${{ github.workspace }}
-        key: river-build-${{ github.run_id }}-${{ runner.os }}-${{ inputs.python }}
+        key: river-build-3862937560-Linux-3.9 #river-build-${{ github.run_id }}-${{ runner.os }}-${{ inputs.python }}
 
     - name: Adjust workspace ownership
       shell: bash
