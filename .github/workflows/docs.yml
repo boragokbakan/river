@@ -44,4 +44,4 @@ jobs:
           git checkout gh-pages
           git pull
           git checkout main
-          mike  deploy dev --push --remote https://github.com/online-ml/river.git
+          mike  deploy dev --push --remote https://github.com/boragokbakan/river.git

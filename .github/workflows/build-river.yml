@@ -63,15 +63,9 @@ jobs:
           source ~/.venv/bin/activate
           pip install -e ".[dev,docs]"
 
-      - run: ls -la ${{github.workspace}}
-
+      # Saving the git project alongside the built package caused issues
       - name: Delete the Git project
         run: rm -r .git
-
-      - run: ls -la ${{github.workspace}}
-      - run: |
-          source ~/.venv/bin/activate
-          which mike
 
       - uses: actions/cache/save@v3
         id: cache-river
