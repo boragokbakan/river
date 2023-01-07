@@ -40,4 +40,4 @@ jobs:
           git checkout gh-pages
           git pull
           git checkout main
-          mike deploy dev --push --remote https://github.com/${{ github.repository }}/river.git
+          mike deploy dev --push --remote https://github.com/${{ github.repository }}.git
